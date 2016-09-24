@@ -30,7 +30,7 @@ static int monome_listener(const char *path, const char *types, lo_arg ** argv,
 int sliders_init(sliders_d *slide)
 {
     slide->selected = 0;
-    slide->incr = 0.01;
+    slide->incr = 0.007;
 
 
 #ifdef STANDALONE

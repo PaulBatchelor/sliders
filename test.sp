@@ -13,7 +13,7 @@ _tab 4096 gen_sine
 _seq '60 65 70 72' gen_vals
 
 # set clock to p-reg 0
-3 _vals tget 40 180 scale 4 * bpm2dur dmetro 0 pset
+3 _vals tget 20 180 scale 4 * bpm2dur dmetro 0 pset
 
 # set exponential envelope to p-reg 1
 0 p 0.002 0.01
