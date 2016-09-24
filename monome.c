@@ -37,6 +37,10 @@ int sliders_press_handler(sliders_d *slide, int x, int y, int s)
 {
     if(y == 7) {
         sliders_select(slide, x);
+    } else {
+        sliders_select(slide, x);
+        slide->vals->tbl[slide->selected] = (y + 1) / 7.0;
+        sliders_set_val(slide);
     }
     return SLIDER_OK;
 }
