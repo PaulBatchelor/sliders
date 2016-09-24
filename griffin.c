@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <soundpipe.h>
 #include <lo/lo.h>
+#include <unistd.h>
 #include "sliders.h"
 
 static void *listener(void *ud) 
