@@ -23,6 +23,7 @@ static void *listener(void *ud)
         return NULL;
     }
     int rc = 0; 
+    gd->gate = 1;
     while(gd->run) {
         rc = read(gd->fid, msg, 24);
         if(msg[STATE] != 0 && rc != -1) { 
@@ -35,11 +36,8 @@ static void *listener(void *ud)
                     }
                     break;
                 case BUTTON: 
-                    if(msg[DATA] == 1) {
-                        //*gd->gate = 1;
-                    } else {
-                        //*gd->gate = 0;
-                    }
+                    if(msg[DATA] == 1) gd->gate = (gd->gate == 1) ? 0 : 1;
+                    break;
                 default:
                     break;
             }

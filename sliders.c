@@ -30,8 +30,8 @@ static int monome_listener(const char *path, const char *types, lo_arg ** argv,
 int sliders_init(sliders_d *slide)
 {
     slide->selected = 0;
-    slide->incr = 0.007;
-
+    slide->inc_sm = 0.007;
+    slide->inc_lg = 0.001;
 
 #ifdef STANDALONE
     sp_create(&slide->sp);
@@ -91,20 +91,28 @@ int sliders_act(sliders_d *slide)
     if(slide->gd.trigme == -1) {
         slide->gd.trigme = 0;
         SPFLOAT *tbl = slide->vals->tbl;
-        tbl[slide->selected] -= slide->incr;
+        tbl[slide->selected] -= sliders_incr(slide);
         tbl[slide->selected] = min(tbl[slide->selected], 1);
         tbl[slide->selected] = max(tbl[slide->selected], 0);
         sliders_set_val(slide);
     } else if(slide->gd.trigme == 1) {
         slide->gd.trigme = 0;
         SPFLOAT *tbl = slide->vals->tbl;
-        tbl[slide->selected] += slide->incr;
+        tbl[slide->selected] += sliders_incr(slide);
         tbl[slide->selected] = min(tbl[slide->selected], 1);
         tbl[slide->selected] = max(tbl[slide->selected], 0);
         sliders_set_val(slide);
     }
 
     return SLIDER_OK;
+}
+
+SPFLOAT sliders_incr(sliders_d *slide)
+{
+    if(slide->gd.gate) 
+        return slide->inc_sm;
+    else
+        return slide->inc_lg;
 }
 
 
@@ -137,6 +145,7 @@ int main(int argc, char *argv[])
 static int sliders(plumber_data *pd, sporth_stack *stack, void **ud)
 {
     sliders_d *slide;
+    const char *str;
     switch(pd->mode) {
         case PLUMBER_CREATE: {
             if(sporth_check_args(stack, "s") != PLUMBER_OK) {
@@ -146,13 +155,13 @@ static int sliders(plumber_data *pd, sporth_stack *stack, void **ud)
             slide = malloc(sizeof(sliders_d));
             *ud = slide;
             slide->sp = pd->sp;
-            char *str = sporth_stack_pop_string(stack);
+            str = sporth_stack_pop_string(stack);
             sliders_init(slide);
             plumber_ftmap_add(pd, str, slide->vals);
             }
             break;
         case PLUMBER_INIT: {
-            char *str = sporth_stack_pop_string(stack);
+            str = sporth_stack_pop_string(stack);
             slide = *ud;
         }
             break;

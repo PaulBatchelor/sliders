@@ -3,13 +3,12 @@ SLIDER_OK,
 SLIDER_NOT_OK
 };
 
-
 typedef struct {
     void (*func)(int type, int ctl, int val, void *);
     int run;
     pthread_t thread;
-    SPFLOAT *trig, *gate;
     int trigme, okaydone;
+    int gate;
     int fid;
 } griffin_d;
 
@@ -20,12 +19,12 @@ KNOB=2,
 BUTTON=1
 };
 
-
 typedef struct {
     lo_address t;
     lo_server_thread st;
     int selected;
-    SPFLOAT incr;
+    SPFLOAT inc_sm;
+    SPFLOAT inc_lg;
     sp_ftbl *vals;
     sp_data *sp;
     griffin_d gd;
@@ -42,6 +41,7 @@ int sliders_set_val(sliders_d *slide);
 int sliders_select(sliders_d *slide, int col);
 int sliders_clean(sliders_d *slide);
 int sliders_clear(sliders_d *slide);
+SPFLOAT sliders_incr(sliders_d *slide);
 
 int griffin_start(sliders_d *slide);
 int griffin_stop(sliders_d *slide);

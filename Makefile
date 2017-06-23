@@ -1,7 +1,7 @@
 OBJ=sliders.o monome.o griffin.o
 
 #CFLAGS= -DSTANDALONE
-CFLAGS= -fPIC  -g
+CFLAGS= -fPIC -g
 
 TARGET=sliders.so
 
