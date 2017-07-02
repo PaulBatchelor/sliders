@@ -1,0 +1,79 @@
+#N canvas 1027 47 337 700 10;
+#X obj 10 33 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 32 158 sliders, f 54;
+#X obj 24 233 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X obj 9 85 metro 10;
+#X msg 182 59 0.05;
+#X obj 423 233 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X msg 182 88 0.007;
+#X msg 181 115 0.001;
+#X floatatom 24 375 5 0 0 0 - - -, f 5;
+#X obj 77 233 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 77 375 5 0 0 0 - - -, f 5;
+#X obj 128 234 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 128 376 5 0 0 0 - - -, f 5;
+#X obj 181 234 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 180 377 5 0 0 0 - - -, f 5;
+#X obj 231 234 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 231 376 5 0 0 0 - - -, f 5;
+#X obj 284 234 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 284 376 5 0 0 0 - - -, f 5;
+#X obj 335 235 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 335 377 5 0 0 0 - - -, f 5;
+#X obj 388 235 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 0 1;
+#X floatatom 388 377 5 0 0 0 - - -, f 5;
+#X text 183 37 Set Increment amount:;
+#X text 17 61 Bang to update values;
+#X obj 82 26 inlet;
+#X obj 19 463 outlet;
+#X obj 75 497 outlet;
+#X obj 129 462 outlet;
+#X obj 279 507 outlet;
+#X obj 189 499 outlet;
+#X obj 235 472 outlet;
+#X obj 339 471 outlet;
+#X obj 389 508 outlet;
+#X obj 466 490 outlet;
+#X connect 0 0 3 0;
+#X connect 1 0 2 0;
+#X connect 1 1 9 0;
+#X connect 1 2 11 0;
+#X connect 1 3 13 0;
+#X connect 1 4 15 0;
+#X connect 1 5 17 0;
+#X connect 1 6 19 0;
+#X connect 1 7 21 0;
+#X connect 1 8 5 0;
+#X connect 2 0 8 0;
+#X connect 3 0 1 0;
+#X connect 4 0 1 0;
+#X connect 5 0 34 0;
+#X connect 6 0 1 0;
+#X connect 7 0 1 0;
+#X connect 8 0 26 0;
+#X connect 9 0 10 0;
+#X connect 10 0 27 0;
+#X connect 11 0 12 0;
+#X connect 12 0 28 0;
+#X connect 13 0 14 0;
+#X connect 14 0 30 0;
+#X connect 15 0 16 0;
+#X connect 16 0 31 0;
+#X connect 17 0 18 0;
+#X connect 18 0 29 0;
+#X connect 19 0 20 0;
+#X connect 20 0 32 0;
+#X connect 21 0 22 0;
+#X connect 22 0 33 0;
+#X connect 25 0 1 0;
+#X coords 0 -1 1 1 420 170 1 20 200;
