@@ -1,22 +1,21 @@
-OBJ=sliders.o monome.o griffin.o
+OBJ=monome.o griffin.o
 
-#CFLAGS= -DSTANDALONE
 CFLAGS= -fPIC -g
 
-TARGET=sliders.so
+TARGET=sliders.so sliders
 
-LIBS=-llo -lsporth -lsoundpipe -lsndfile -lm -lpthread 
+LIBS=-llo -lsporth -lsoundpipe -lsndfile -lm -lpthread -ldl
 
 default: $(TARGET) 
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-sliders: $(OBJ)
-	$(CC) $(OBJ) $(CFLAGS) $(LIBS) -o $@ 
+sliders: $(OBJ) sliders.c
+	$(CC) $(OBJ) $(CFLAGS) -DSTANDALONE sliders.c -o $@ $(LIBS)
 
-sliders.so: $(OBJ)
-	$(CC) -shared $(OBJ) $(CFLAGS) $(LIBS)  -o $@ 
+sliders.so: $(OBJ) sliders.c
+	$(CC) -shared $(OBJ) $(CFLAGS) $(LIBS) sliders.c -o $@ 
 
 install: sliders.so
 	mkdir -p /usr/local/share/sporth/plugins
