@@ -112,9 +112,14 @@ int sliders_act(sliders_d *slide)
     return SLIDER_OK;
 }
 
+void sliders_set_incr(sliders_d *slide, SPFLOAT f)
+{
+    slide->inc_sm = f;
+}
+
 SPFLOAT sliders_incr(sliders_d *slide)
 {
-    return slide->inc_lg;
+    return slide->inc_sm;
 }
 
 

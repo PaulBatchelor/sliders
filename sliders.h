@@ -42,6 +42,7 @@ int sliders_select(sliders_d *slide, int col);
 int sliders_clean(sliders_d *slide);
 int sliders_clear(sliders_d *slide);
 SPFLOAT sliders_incr(sliders_d *slide);
+void sliders_set_incr(sliders_d *slide, SPFLOAT f);
 
 int griffin_start(sliders_d *slide);
 int griffin_stop(sliders_d *slide);

@@ -57,6 +57,11 @@ static void sliders_bang(t_sliders *x)
     outlet_float(x->gate, x->slide.gd.gate);
 }
 
+static void sliders_float(t_sliders *x, t_float f)
+{
+    sliders_set_incr(&x->slide, f);
+}
+
 void sliders_setup(void)
 {
     sliders_class = class_new(
@@ -70,4 +75,5 @@ void sliders_setup(void)
 
     CLASS_MAINSIGNALIN(sliders_class, t_sliders, x_f);
     class_addbang(sliders_class, sliders_bang);
+    class_addfloat(sliders_class, sliders_float);
 }
