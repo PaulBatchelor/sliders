@@ -3,9 +3,13 @@
 #include <signal.h>
 #include <soundpipe.h>
 
-#ifndef STANDALONE
+#ifdef BUILD_SPORTH
 #include <sporth.h>
 #include <stdlib.h>
+#endif
+
+#ifdef PD
+#include <m_pd.h>
 #endif
 
 #include "sliders.h"
@@ -18,7 +22,7 @@
 #define max(a, b) ((a > b) ? a : b)
 #endif
 
-static void error(int num, const char *msg, const char *path)
+static void osc_error(int num, const char *msg, const char *path)
 {
     printf("liblo server error %d in path %s: %s\n", num, path, msg);
     fflush(stdout);
@@ -33,7 +37,7 @@ int sliders_init(sliders_d *slide)
     slide->inc_sm = 0.007;
     slide->inc_lg = 0.001;
 
-#ifdef STANDALONE
+#ifdef STANDALONE 
     sp_create(&slide->sp);
 #endif
     sp_ftbl_create(slide->sp, &slide->vals, 8);
@@ -44,7 +48,7 @@ int sliders_init(sliders_d *slide)
 int sliders_begin(sliders_d *slide)
 {
     slide->t = lo_address_new(NULL, "8080");
-    slide->st = lo_server_thread_new("8000", error);
+    slide->st = lo_server_thread_new("8000", osc_error);
     //if(slide->st == NULL) return SLIDER_NOT_OK;
     lo_server_thread_add_method(slide->st, "/monome/press", "iii", 
             monome_listener, slide);
@@ -84,13 +88,14 @@ int sliders_select(sliders_d *slide, int col)
 
 int sliders_act(sliders_d *slide)
 {
+    SPFLOAT *tbl;
     if(slide->begin) {
         slide->begin = 0;
         sliders_begin(slide);
     }
     if(slide->gd.trigme == -1) {
         slide->gd.trigme = 0;
-        SPFLOAT *tbl = slide->vals->tbl;
+        tbl = slide->vals->tbl;
         tbl[slide->selected] -= sliders_incr(slide);
         tbl[slide->selected] = min(tbl[slide->selected], 1);
         tbl[slide->selected] = max(tbl[slide->selected], 0);
@@ -109,15 +114,11 @@ int sliders_act(sliders_d *slide)
 
 SPFLOAT sliders_incr(sliders_d *slide)
 {
-    if(slide->gd.gate) 
-        return slide->inc_sm;
-    else
-        return slide->inc_lg;
+    return slide->inc_lg;
 }
 
 
-
-#ifdef STANDALONE
+#ifdef BUILD_MAIN
 
 static volatile int g_keep_running = 1;
 
@@ -140,8 +141,9 @@ int main(int argc, char *argv[])
     sliders_clean(&slide);
     return 0;
 }
-#else
+#endif
 
+#ifdef BUILD_SPORTH
 static int sliders(plumber_data *pd, sporth_stack *stack, void **ud)
 {
     sliders_d *slide;
@@ -183,4 +185,8 @@ plumber_dyn_func sporth_return_ugen()
 {
     return sliders;
 }
+#endif
+
+#ifdef PD
+#include "pd.c"
 #endif
